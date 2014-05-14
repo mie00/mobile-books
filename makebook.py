@@ -13,7 +13,7 @@ def generate(number):
 
 	    	f.write('<!DOCTYPE html><html><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><body dir="rtl">\n\
 	    		<p>PAGE: %d</p>\n\
-	    		GOTO: <input onchange="window.location.href+=this.value+\".html\"" />\n\
+	    		GOTO: <input onchange="location.replace(this.value+\".html\")" />\n\
 	    		<p><a href="%d.html">&lt;&lt;&lt;</a> | <a href="../../index.html">INDEX</a> | <a href="%d.html">&gt;&gt;&gt;</a></p>\n\
 	    		<p>%s</p>\n\
 	    		<p><a href="%d.html">&lt;&lt;&lt;</a> | <a href="../../index.html">INDEX</a> | <a href="%d.html">&gt;&gt;&gt;</a></p>\n\
