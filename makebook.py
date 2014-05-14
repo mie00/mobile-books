@@ -13,7 +13,7 @@ def generate(number):
 
 	    	f.write('<!DOCTYPE html><html><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><body dir="rtl">\n\
 	    		<p>PAGE: %d</p>\n\
-	    		GOTO: <input onchange="document.getElementById(\"pla\").href=this.value+\".html\"" /><a>go</a>\n\
+	    		GOTO: <input onchange="window.location.href+=this.value+\".html\"" />\n\
 	    		<p><a href="%d.html">&lt;&lt;&lt;</a> | <a href="../../index.html">INDEX</a> | <a href="%d.html">&gt;&gt;&gt;</a></p>\n\
 	    		<p>%s</p>\n\
 	    		<p><a href="%d.html">&lt;&lt;&lt;</a> | <a href="../../index.html">INDEX</a> | <a href="%d.html">&gt;&gt;&gt;</a></p>\n\
@@ -23,8 +23,7 @@ def generate(number):
 	conn.close()
 
 for i in listdir('data'):
-	generate(int(i[:-4]))
-	print i
-	break
+	if int(i[:-4])==6593:
+		generate(int(i[:-4]))
 
 import updateindex
