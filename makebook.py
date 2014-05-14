@@ -12,14 +12,19 @@ def generate(number):
 	    with open('op\\%d\\%d.html'%(number,row.id),'wb') as f:
 
 	    	f.write('<!DOCTYPE html><html><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><body dir="rtl">\n\
+	    		<p>PAGE: %d</p>\n\
+	    		GOTO: <input onchange="document.getElementById(\"pla\").href=this.value+\".html\"" /><a>go</a>\n\
 	    		<p><a href="%d.html">&lt;&lt;&lt;</a> | <a href="../../index.html">INDEX</a> | <a href="%d.html">&gt;&gt;&gt;</a></p>\n\
 	    		<p>%s</p>\n\
 	    		<p><a href="%d.html">&lt;&lt;&lt;</a> | <a href="../../index.html">INDEX</a> | <a href="%d.html">&gt;&gt;&gt;</a></p>\n\
-	    		</body></html>'%(row.id-1,row.id+1,row.nass.decode('windows-1256').encode('utf-8').replace('\r','<br />'),row.id-1,row.id+1))
+	    		<p>PAGE: %d</p>\n\
+	    		</body></html>'%(row.id,row.id-1,row.id+1,row.nass.decode('windows-1256').encode('utf-8').replace('\r','<br />'),row.id-1,row.id+1,row.id))
 	cursor.close()
 	conn.close()
 
 for i in listdir('data'):
 	generate(int(i[:-4]))
+	print i
+	break
 
 import updateindex
