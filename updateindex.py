@@ -10,7 +10,7 @@ def get_book_name(id):
 		return row.bk
 def format_book(id1):
 	id=int(id1)
-	return '<a href="op\\%i\\1.html">%s</a>'%(id,get_book_name(id))
+	return '<a href="op/%i/1.html">%s</a>'%(id,get_book_name(id))
 
 
 op='<!doctype html>\
