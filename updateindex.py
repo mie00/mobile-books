@@ -7,7 +7,7 @@ cursor = conn.cursor()
 def get_book_name(id):
 	SQL = 'SELECT bk FROM 0bok WHERE bkid=%i'%(id)
 	for row in cursor.execute(SQL): # cursors are iterable
-		return row.bk
+		return row.bk.decode('windows-1256').encode('utf-8')
 def format_book(id1):
 	id=int(id1)
 	return '<a href="op/%i/1.html">%s</a>'%(id,get_book_name(id))
@@ -16,7 +16,7 @@ def format_book(id1):
 op='<!doctype html>\
 <html lang="en">\
 <head>\
-	<meta charset="windows-1256">\
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">\
 	<title>Document</title>\
 </head>\
 <body dir="rtl">\

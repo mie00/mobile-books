@@ -11,9 +11,9 @@ def generate(number):
 	for row in cursor.execute(SQL): # cursors are iterable
 	    with open('op\\%d\\%d.html'%(number,row.id),'wb') as f:
 
-	    	f.write('<!DOCTYPE html><html><meta charset="windows-1256"><body dir="rtl">\
-	    		<p><a href="%d.html">&lt;</a><a href="../../index.html">&uarr;</a><a href="%d.html">&gt;</a></p>\
-	    		<p>%s</p></body></html>'%(row.id-1,row.id+1,row.nass.replace('\r','<br />')))
+	    	f.write('<!DOCTYPE html><html><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><body dir="rtl">\n\
+	    		<p><a href="%d.html">&lt;</a> | <a href="../../index.html">&uarr;</a> | <a href="%d.html">&gt;</a></p>\
+	    		<p>%s</p></body></html>'%(row.id-1,row.id+1,row.nass.decode('windows-1256').encode('utf-8').replace('\r','<br />')))
 	cursor.close()
 	conn.close()
 
