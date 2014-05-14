@@ -22,6 +22,6 @@ def generate(number):
 	conn.close()
 
 for i in listdir('data'):
-	generate(int(i[:-4]))
+		generate(int(i[:-4]))
 
 import updateindex
