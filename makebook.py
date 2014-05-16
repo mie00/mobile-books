@@ -1,15 +1,15 @@
 import pyodbc
 from os import makedirs,path,listdir
 def generate(number):
-	DBfile = 'data\\%d.mdb'%(number)
-	if not path.exists('op\\%d'%(number)):
-		makedirs('op\\%d'%(number))
+	DBfile = 'shamela\\in\\%d.mdb'%(number)
+	if not path.exists('shamela\\out\\%d'%(number)):
+		makedirs('shamela\\out\\%d'%(number))
 	conn = pyodbc.connect('DRIVER={Microsoft Access Driver (*.mdb)};DBQ='+DBfile)
 	cursor = conn.cursor()
 	 
 	SQL = 'SELECT * FROM book ORDER BY id'
 	for row in cursor.execute(SQL): # cursors are iterable
-	    with open('op\\%d\\%d.html'%(number,row.id),'wb') as f:
+	    with open('shamela\\out\\%d\\%d.html'%(number,row.id),'wb') as f:
 
 	    	f.write('<!DOCTYPE html><html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"></head><body dir="rtl">\n\
 	    		<p>PAGE: %d</p>\n\
@@ -21,7 +21,7 @@ def generate(number):
 	cursor.close()
 	conn.close()
 
-for i in listdir('data'):
+for i in listdir('shamela\\in'):
 		generate(int(i[:-4]))
 
 import updateindex

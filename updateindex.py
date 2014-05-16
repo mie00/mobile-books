@@ -10,7 +10,7 @@ def get_book_name(id):
 		return row.bk.decode('windows-1256').encode('utf-8')
 def format_book(id1):
 	id=int(id1)
-	return '<a href="op/%i/1.html">%s</a>'%(id,get_book_name(id))
+	return '<a href="out/%i/1.html">%s</a>'%(id,get_book_name(id))
 
 
 op='<!doctype html>\
@@ -22,8 +22,8 @@ op='<!doctype html>\
 <body dir="rtl">\
 %s\
 </body>\
-</html>'%('<br />'.join(map(format_book,listdir('op'))))
-with open('index.html','wb') as f:
+</html>'%('<br />'.join(map(format_book,listdir('shamela/out'))))
+with open('shamela\\index.html','wb') as f:
 	f.write(op)
 cursor.close()
 conn.close()
