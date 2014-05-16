@@ -22,8 +22,8 @@ op='<!doctype html>\
 <body dir="rtl">\
 %s\
 </body>\
-</html>'%('<br />'.join(map(format_book,listdir('shamela/out'))))
-with open('shamela\\index.html','wb') as f:
+</html>'%('<br />'.join(map(format_book,listdir('out'))))
+with open('index.html','wb') as f:
 	f.write(op)
 cursor.close()
 conn.close()
