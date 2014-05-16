@@ -8,20 +8,50 @@ def generate(number):
 	cursor = conn.cursor()
 	 
 	SQL = 'SELECT * FROM book ORDER BY id'
-	for row in cursor.execute(SQL): # cursors are iterable
+	ids = map(lambda x:x.id,cursor.execute('SELECT id FROM book ORDER BY id'))
+	ids=[ids[0]]+ids+[ids[-1]]
+	for i,row in enumerate(cursor.execute(SQL)): # cursors are iterable
 	    with open('out\\%d\\%d.html'%(number,row.id),'wb') as f:
-
 	    	f.write('<!DOCTYPE html><html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"></head><body dir="rtl">\n\
 	    		<p>PAGE: %d</p>\n\
 	    		<p><a href="%d.html">&lt;&lt;&lt;</a> | <a href="../../index.html">INDEX</a> | <a href="%d.html">&gt;&gt;&gt;</a></p>\n\
 	    		<p>%s</p>\n\
 	    		<p><a href="%d.html">&lt;&lt;&lt;</a> | <a href="../../index.html">INDEX</a> | <a href="%d.html">&gt;&gt;&gt;</a></p>\n\
 	    		<p>PAGE: %d</p>\n\
-	    		</body></html>'%(row.id,row.id-1,row.id+1,row.nass.decode('windows-1256').encode('utf-8').replace('\r','<br />'),row.id-1,row.id+1,row.id))
+	    		</body></html>'%(row.id,ids[i],ids[i+2],row.nass.decode('windows-1256').encode('utf-8').replace('\r','<br />'),ids[i],ids[i+2],row.id))
 	cursor.close()
 	conn.close()
-
+	return ids[0]
+start_page={}
 for i in listdir('in'):
-		generate(int(i[:-4]))
+		start_page[i[:-4]]=generate(int(i[:-4]))
 
-import updateindex
+
+DBfile = 'main.mdb'
+conn = pyodbc.connect('DRIVER={Microsoft Access Driver (*.mdb)};DBQ='+DBfile)
+cursor = conn.cursor()
+
+def get_book_name(id):
+	SQL = 'SELECT bk FROM 0bok WHERE bkid=%i'%(id)
+	for row in cursor.execute(SQL): # cursors are iterable
+		return row.bk.decode('windows-1256').encode('utf-8')
+def format_book(id1):
+	id=int(id1)
+	return '<a href="out/%i/%s.html">%s</a>'%(id,start_page[id1],get_book_name(id))
+
+
+op='<!doctype html>\
+<html lang="en">\
+<head>\
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">\
+	<title>mobile-books</title>\
+</head>\
+<body dir="rtl">\
+%s\
+</body>\
+</html>'%('<br />'.join(map(format_book,listdir('out'))))
+with open('index.html','wb') as f:
+	f.write(op)
+cursor.close()
+conn.close()
+
