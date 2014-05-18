@@ -9,6 +9,8 @@ def generate(number):
 	 
 	SQL = 'SELECT * FROM book ORDER BY id'
 	ids = map(lambda x:x.id,cursor.execute('SELECT id FROM book ORDER BY id'))
+	with open("out\\%d\\index.html"%(number),'wb') as f:
+		f.write(' '.join(map(lambda x:"<a href='%d.html'>%d</a>"%(x,x),ids)))
 	ids=[ids[0]]+ids+[ids[-1]]
 	for i,row in enumerate(cursor.execute(SQL)): # cursors are iterable
 	    with open('out\\%d\\%d.html'%(number,row.id),'wb') as f:
@@ -21,10 +23,8 @@ def generate(number):
 	    		</body></html>'%(row.id,ids[i],ids[i+2],row.nass.decode('windows-1256').encode('utf-8').replace('\r','<br />'),ids[i],ids[i+2],row.id))
 	cursor.close()
 	conn.close()
-	return ids[0]
-start_page={}
 for i in listdir('in'):
-		start_page[i[:-4]]=generate(int(i[:-4]))
+		generate(int(i[:-4]))
 
 
 DBfile = 'main.mdb'
@@ -37,7 +37,7 @@ def get_book_name(id):
 		return row.bk.decode('windows-1256').encode('utf-8')
 def format_book(id1):
 	id=int(id1)
-	return '<a href="out/%i/%s.html">%s</a>'%(id,start_page[id1],get_book_name(id))
+	return '<a href="out/%i/index.html">%s</a>'%(id,,get_book_name(id))
 
 
 op='<!doctype html>\
