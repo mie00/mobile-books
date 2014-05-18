@@ -37,7 +37,7 @@ def get_book_name(id):
 		return row.bk.decode('windows-1256').encode('utf-8')
 def format_book(id1):
 	id=int(id1)
-	return '<a href="out/%i/index.html">%s</a>'%(id,,get_book_name(id))
+	return '<a href="out/%i/index.html">%s</a>'%(id,get_book_name(id))
 
 
 op='<!doctype html>\
