@@ -10,7 +10,17 @@ def generate(number):
 	SQL = 'SELECT * FROM book ORDER BY id'
 	ids = map(lambda x:x.id,cursor.execute('SELECT id FROM book ORDER BY id'))
 	with open("out\\%d\\index.html"%(number),'wb') as f:
-		f.write(' '.join(map(lambda x:"<a href='%d.html'>%d</a>"%(x,x),ids)))
+		f.write('<!doctype html>\
+			<html lang="en">\
+			<head>\
+				<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">\
+				<title>mobile-books</title>\
+			</head>\
+			<body dir="rtl">\
+			<p><a href="../../index.html">MAIN</a></p>\
+			%s\
+			</body>\
+			</html>'%(' '.join(map(lambda x:"<a href='%d.html'>%d</a>"%(x,x),ids))))
 	ids=[ids[0]]+ids+[ids[-1]]
 	for i,row in enumerate(cursor.execute(SQL)): # cursors are iterable
 	    with open('out\\%d\\%d.html'%(number,row.id),'wb') as f:
